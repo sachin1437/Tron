@@ -20,6 +20,7 @@ COLORS = {1: (0, 220, 0), 2: (255, 165, 0), 3: (255, 60, 60), 4: (0, 255, 255), 
 
 BASE = Path(__file__).parent
 WEIGHTS = BASE / 'tron_cnn.pt'
+WEIGHTS_REPO = 'sachingupta07/tron-cnn-weights'
 SAMPLE_DIR = BASE / 'samples'
 
 
@@ -151,11 +152,21 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-if not WEIGHTS.exists():
-    st.error(f'Model file not found: {WEIGHTS.name}. Place it next to app.py.')
+@st.cache_resource(show_spinner='Downloading model weights')
+def get_weights():
+    if WEIGHTS.exists():
+        return str(WEIGHTS)
+    from huggingface_hub import hf_hub_download
+    return hf_hub_download(repo_id=WEIGHTS_REPO, filename='tron_cnn.pt')
+
+
+try:
+    weights_path = get_weights()
+except Exception:
+    st.error('Model weights could not be loaded. Place tron_cnn.pt next to app.py or check the weights repository.')
     st.stop()
 
-model, dev = load_model(str(WEIGHTS))
+model, dev = load_model(weights_path)
 
 with st.sidebar:
     st.header('Settings')
