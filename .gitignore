@@ -1,0 +1,4 @@
+venv/
+__pycache__/
+*.pyc
+tron_cnn.pt

@@ -1,13 +1,3 @@
----
-title: Tron Traffic Detection
-emoji: 🚦
-colorFrom: blue
-colorTo: green
-sdk: streamlit
-app_file: app.py
-pinned: false
----
-
 # Vehicle and Object Detection for Traffic Surveillance using CNN-Based Models
 
 Team Tron | Author: Sachin Gupta | Guide: Dr. Rosepreet Kaur Bhogal
@@ -64,7 +54,7 @@ The feature map feeds a Faster R-CNN detection head (region proposal network, Ro
 | Augmentation | horizontal flip, brightness jitter |
 | Initialisation | Kaiming normal, no pretrained weights |
 
-The full training script is `tron_cnn_detector.py`. It is written for Kaggle: add the BDD100K YOLO-format dataset as an input, enable a GPU, set `SMOKE = False` and run it. With `SMOKE = True` it does a short test run to check the setup. It writes the weights to `tron_cnn.pt` along with the metrics, training curves and sample detections.
+Training ran in a Kaggle notebook on a T4 GPU, and only the resulting weights (`tron_cnn.pt`) were downloaded to this project. The notebook code is included as `tron_cnn_detector.py` for reference. It uses Kaggle paths, so to rerun it, add the BDD100K YOLO-format dataset as a Kaggle input, enable a GPU, set `SMOKE = False` and run it. With `SMOKE = True` it does a short test run to check the setup. It writes the weights along with the metrics, training curves and sample detections.
 
 ## Project structure
 
@@ -72,7 +62,7 @@ The full training script is `tron_cnn_detector.py`. It is written for Kaggle: ad
 app.py                    Streamlit app
 tron_cnn.pt               trained weights
 requirements.txt          dependencies
-tron_cnn_detector.py      training and evaluation script (Kaggle)
+tron_cnn_detector.py      training and evaluation code from the Kaggle notebook (reference)
 samples/                  optional demo images shown in the app
 README.md
 ```
