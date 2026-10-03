@@ -2,6 +2,8 @@
 
 Team Tron | Author: Sachin Gupta | Guide: Dr. Rosepreet Kaur Bhogal
 
+Live demo: https://tron-traffic-detection.streamlit.app
+
 A traffic surveillance detector built around a CNN backbone designed and trained from scratch, with no pretrained weights. It finds cars, buses, trucks and people in road scenes and ships with a Streamlit app for images, video and camera input.
 
 ## Results
@@ -60,7 +62,7 @@ Training ran in a Kaggle notebook on a T4 GPU, and only the resulting weights (`
 
 ```
 app.py                    Streamlit app
-tron_cnn.pt               trained weights
+tron_cnn.pt               trained weights (kept out of this repo, hosted on Hugging Face)
 requirements.txt          dependencies
 tron_cnn_detector.py      training and evaluation code from the Kaggle notebook (reference)
 samples/                  optional demo images shown in the app
@@ -90,6 +92,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+The app looks for `tron_cnn.pt` next to `app.py`. If the file is not there, it downloads the weights from the Hugging Face repository `sachingupta07/tron-cnn-weights` the first time it starts.
+
 Without an NVIDIA GPU, skip the PyTorch line and the app runs on the CPU. To check which one is in use:
 
 ```
@@ -110,7 +114,9 @@ The sidebar sets the confidence threshold, which classes to show, and whether la
 
 ## Deployment
 
-The app runs on Hugging Face Spaces with the Streamlit SDK. Create a Space, upload `app.py`, `requirements.txt`, `tron_cnn.pt` and the `samples` folder, and keep the header at the top of this file. The Space builds on its own. The live webcam tab needs a camera on the server, so it only works locally. The camera snapshot tab works in the deployed version because it uses the browser's camera.
+The app is deployed on Streamlit Community Cloud from this repository: https://tron-traffic-detection.streamlit.app
+
+The weights file is too large for GitHub (over 100 MB), so it is hosted in a Hugging Face model repository, `sachingupta07/tron-cnn-weights`, and the app downloads it on first start. The cloud version runs on CPU, so each image takes a fraction of a second to a few seconds. The live webcam tab needs a camera on the server, so it only works when the app runs locally. The camera snapshot tab works online because it uses the browser's camera. Apps on the free tier go to sleep after a period without visitors, so the first load after a quiet period takes longer.
 
 ## Limitations
 
@@ -121,4 +127,4 @@ The app runs on Hugging Face Spaces with the Streamlit SDK. Create a Space, uplo
 
 ## Acknowledgements
 
-BDD100K dataset by Berkeley DeepDrive. Built with PyTorch, torchvision, OpenCV and Streamlit. Training ran on Kaggle.
+BDD100K dataset by Berkeley DeepDrive. The trained weights are shared under CC BY-NC 4.0 because the dataset terms cover educational, research and not-for-profit use. Built with PyTorch, torchvision, OpenCV and Streamlit. Training ran on Kaggle.
